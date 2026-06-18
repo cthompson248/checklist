@@ -1,5 +1,5 @@
-import { ChecklistPrototype } from "@/components/checklist-prototype";
+import { SprintBoardPrototype } from "@/components/sprint-board/sprint-board-prototype";
 
 export default function Home() {
-  return <ChecklistPrototype />;
+  return <SprintBoardPrototype />;
 }
