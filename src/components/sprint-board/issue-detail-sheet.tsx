@@ -7,6 +7,7 @@ import { ClickToEditField } from "@/components/sprint-board/click-to-edit-field"
 import { IssueLabelsField } from "@/components/sprint-board/issue-labels-field";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -40,6 +41,7 @@ type IssueDetailSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onUpdate: (issue: Issue) => void;
+  onDelete: (issueId: string) => void;
   availableLabels: string[];
   onAvailableLabelsChange: (labels: string[]) => void;
 };
@@ -49,6 +51,7 @@ export function IssueDetailSheet({
   open,
   onOpenChange,
   onUpdate,
+  onDelete,
   availableLabels,
   onAvailableLabelsChange,
 }: IssueDetailSheetProps) {
@@ -109,14 +112,14 @@ export function IssueDetailSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full gap-0 overflow-y-auto p-0 sm:max-w-[520px]"
+        className="flex w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-[520px]"
       >
         <SheetTitle className="sr-only">{activeIssue.title}</SheetTitle>
         <SheetDescription className="sr-only">
           Edit issue details, metadata, and checklist items.
         </SheetDescription>
 
-        <div className="flex flex-col">
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
           <div className="space-y-4 px-6 pt-6 pb-5">
             <Badge variant="outline" className="font-mono text-[11px]">
               {activeIssue.key}
@@ -321,6 +324,17 @@ export function IssueDetailSheet({
               </li>
             </ul>
           </div>
+        </div>
+
+        <div className="flex shrink-0 justify-center border-t border-border px-6 py-4">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => onDelete(activeIssue.id)}
+            className="text-muted-foreground hover:bg-destructive hover:text-white"
+          >
+            Delete
+          </Button>
         </div>
       </SheetContent>
     </Sheet>

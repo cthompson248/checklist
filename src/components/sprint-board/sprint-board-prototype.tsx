@@ -30,6 +30,12 @@ export function SprintBoardPrototype() {
     );
   }
 
+  function handleDeleteIssue(issueId: string) {
+    setIssues((current) => current.filter((issue) => issue.id !== issueId));
+    setSheetOpen(false);
+    setSelectedIssueId(null);
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <KanbanBoard
@@ -43,6 +49,7 @@ export function SprintBoardPrototype() {
         open={sheetOpen && selectedIssue !== null}
         onOpenChange={setSheetOpen}
         onUpdate={handleUpdateIssue}
+        onDelete={handleDeleteIssue}
         availableLabels={availableLabels}
         onAvailableLabelsChange={setAvailableLabels}
       />
