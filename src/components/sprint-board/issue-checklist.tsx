@@ -10,7 +10,7 @@ import type { ChecklistItem } from "@/lib/sprint-data";
 import { cn } from "@/lib/utils";
 
 const addRowClassName =
-  "flex w-full items-center justify-start gap-2 py-1";
+  "flex w-full items-center justify-start gap-2 px-0 py-1";
 
 const addRowInputClassName =
   "m-0 min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-sm leading-5 text-foreground shadow-none outline-none placeholder:text-muted-foreground focus:ring-0 rounded-none [caret-color:currentColor]";
@@ -108,10 +108,7 @@ export function IssueChecklist({ items, onItemsChange }: IssueChecklistProps) {
         <button
           type="button"
           onClick={() => setIsAddingChecklist(true)}
-          className={cn(
-            addRowClassName,
-            "text-left text-sm text-muted-foreground transition-colors hover:text-foreground",
-          )}
+          className="flex w-full items-center justify-start gap-2 rounded-[10px] px-0 py-1 text-left text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <Plus className="size-5 shrink-0" aria-hidden />
           {showIdleLabel}

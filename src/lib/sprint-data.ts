@@ -43,6 +43,7 @@ export const STATUS_OPTIONS: {
   label: string;
   dot: string;
   pill: string;
+  headerBadge: string;
   column: string;
 }[] = [
   {
@@ -50,6 +51,7 @@ export const STATUS_OPTIONS: {
     label: "In Progress",
     dot: "bg-orange-500",
     pill: "border-orange-200 bg-orange-50 text-orange-800",
+    headerBadge: "border-0 bg-orange-500/10 text-foreground",
     column: "border-t-orange-400",
   },
   {
@@ -57,6 +59,7 @@ export const STATUS_OPTIONS: {
     label: "In Review",
     dot: "bg-violet-500",
     pill: "border-violet-200 bg-violet-50 text-violet-800",
+    headerBadge: "border-0 bg-violet-500/10 text-foreground",
     column: "border-t-violet-400",
   },
   {
@@ -64,6 +67,7 @@ export const STATUS_OPTIONS: {
     label: "Done",
     dot: "bg-emerald-500",
     pill: "border-emerald-200 bg-emerald-50 text-emerald-800",
+    headerBadge: "border-0 bg-emerald-500/10 text-foreground",
     column: "border-t-emerald-400",
   },
 ];
@@ -72,11 +76,12 @@ export const PRIORITY_OPTIONS: {
   value: IssuePriority;
   label: string;
   pill: string;
+  dot: string;
 }[] = [
-  { value: "urgent", label: "Urgent", pill: "border-red-200 bg-red-50 text-red-700" },
-  { value: "high", label: "High", pill: "border-orange-200 bg-orange-50 text-orange-700" },
-  { value: "medium", label: "Medium", pill: "border-amber-200 bg-amber-50 text-amber-800" },
-  { value: "low", label: "Low", pill: "border-emerald-200 bg-emerald-50 text-emerald-700" },
+  { value: "urgent", label: "Urgent", pill: "border-red-200 bg-red-50 text-red-700", dot: "bg-red-500" },
+  { value: "high", label: "High", pill: "border-orange-200 bg-orange-50 text-orange-700", dot: "bg-orange-500" },
+  { value: "medium", label: "Medium", pill: "border-amber-200 bg-amber-50 text-amber-800", dot: "bg-amber-500" },
+  { value: "low", label: "Low", pill: "border-emerald-200 bg-emerald-50 text-emerald-700", dot: "bg-emerald-500" },
 ];
 
 export const INITIAL_ISSUES: Issue[] = [

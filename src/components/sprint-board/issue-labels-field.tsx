@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Check, Plus, X } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -70,25 +69,7 @@ export function IssueLabelsField({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2 self-start">
-      {labels.map((label) => (
-        <Badge
-          key={label}
-          variant="secondary"
-          className="h-8 gap-1.5 px-3 text-sm"
-        >
-          {label}
-          <button
-            type="button"
-            onClick={() => removeLabel(label)}
-            className="inline-flex size-5 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground"
-            aria-label={`Remove ${label} label`}
-          >
-            <X className="size-3.5" />
-          </button>
-        </Badge>
-      ))}
-
+    <div className="flex flex-wrap items-center gap-2">
       <Popover
         open={open}
         onOpenChange={(nextOpen) => {
@@ -97,15 +78,13 @@ export function IssueLabelsField({
         }}
       >
         <PopoverTrigger asChild>
-          <Button
+          <button
             type="button"
-            variant="outline"
-            size="icon-sm"
-            className="size-8 shrink-0"
+            className="inline-flex shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
             aria-label="Add label"
           >
-            <Plus className="size-4" />
-          </Button>
+            <Plus className="size-5 shrink-0" aria-hidden />
+          </button>
         </PopoverTrigger>
         <PopoverContent align="start" className="w-56 p-0">
           <Command onValueChange={setSearch}>
@@ -141,6 +120,24 @@ export function IssueLabelsField({
           </Command>
         </PopoverContent>
       </Popover>
+
+      {labels.map((label) => (
+        <Badge
+          key={label}
+          variant="outline"
+          className="h-[22px] gap-1 rounded-lg border-border bg-muted px-2.5 text-xs font-medium"
+        >
+          {label}
+          <button
+            type="button"
+            onClick={() => removeLabel(label)}
+            className="inline-flex size-4 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground"
+            aria-label={`Remove ${label} label`}
+          >
+            <X className="size-3" />
+          </button>
+        </Badge>
+      ))}
     </div>
   );
 }

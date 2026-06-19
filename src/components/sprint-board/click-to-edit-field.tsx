@@ -9,6 +9,8 @@ type ClickToEditFieldProps = {
   onCommit: (value: string) => void;
   multiline?: boolean;
   placeholder?: string;
+  viewClassName?: string;
+  editClassName?: string;
   className?: string;
   ariaLabel: string;
 };
@@ -21,6 +23,8 @@ export function ClickToEditField({
   onCommit,
   multiline = false,
   placeholder = "Click to edit",
+  viewClassName,
+  editClassName,
   className,
   ariaLabel,
 }: ClickToEditFieldProps) {
@@ -101,12 +105,16 @@ export function ClickToEditField({
       className={cn(
         sharedFieldClass,
         multiline
-          ? "min-h-[120px] text-sm leading-relaxed md:text-sm"
+          ? "min-h-[90px] text-sm leading-5 md:text-sm"
           : "min-h-0 text-xl font-semibold leading-tight tracking-tight md:text-xl",
         isEditing
-          ? "border-input ring-3 ring-ring/50"
+          ? cn(
+              multiline && "rounded-[10px] border-foreground/30",
+              editClassName,
+            )
           : "cursor-text hover:bg-muted/40",
         !value && !isEditing && "text-muted-foreground",
+        viewClassName,
         className,
       )}
     />
