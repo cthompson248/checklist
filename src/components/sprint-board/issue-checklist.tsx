@@ -164,14 +164,14 @@ export function IssueChecklist({ items, onItemsChange }: IssueChecklistProps) {
         {items.map((item) => (
           <li
             key={item.id}
-            className="group -ml-3 -mr-2 flex min-h-10 items-start gap-3 rounded-[10px] py-2 pl-3 pr-2 hover:bg-border/60"
+            className="group -ml-3 -mr-2 flex min-h-10 items-center gap-3 rounded-[10px] pl-3 pr-2 hover:bg-border/60"
           >
             <Checkbox
               checked={item.done}
               onCheckedChange={(checked) =>
                 toggleChecklistItem(item.id, checked === true)
               }
-              className="mt-0.5 size-4 shrink-0"
+              className="size-4 shrink-0"
               aria-label={`Mark ${item.label} as ${item.done ? "incomplete" : "complete"}`}
             />
             <textarea
@@ -189,7 +189,7 @@ export function IssueChecklist({ items, onItemsChange }: IssueChecklistProps) {
             <button
               type="button"
               onClick={() => removeChecklistItem(item.id)}
-              className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
+              className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
               aria-label={`Remove ${item.label}`}
             >
               <MinusCircle className="size-4" />
