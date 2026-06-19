@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { MinusCircle, Plus } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import type { ChecklistItem } from "@/lib/sprint-data";
 import { cn } from "@/lib/utils";
@@ -14,6 +13,9 @@ const addRowClassName =
 
 const addRowInputClassName =
   "m-0 min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-sm leading-5 text-foreground shadow-none outline-none placeholder:text-muted-foreground focus:ring-0 rounded-none [caret-color:currentColor]";
+
+const checklistItemInputClassName =
+  "m-0 min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-sm leading-5 text-foreground shadow-none outline-none focus:ring-0 rounded-none field-sizing-content resize-none overflow-hidden [caret-color:currentColor]";
 
 type IssueChecklistProps = {
   items: ChecklistItem[];
@@ -162,30 +164,32 @@ export function IssueChecklist({ items, onItemsChange }: IssueChecklistProps) {
         {items.map((item) => (
           <li
             key={item.id}
-            className="group -ml-3 -mr-2 flex h-10 items-center justify-start gap-3 rounded-[10px] pl-3 pr-2 hover:bg-border/60"
+            className="group -ml-3 -mr-2 flex min-h-10 items-start gap-3 rounded-[10px] py-2 pl-3 pr-2 hover:bg-border/60"
           >
             <Checkbox
               checked={item.done}
               onCheckedChange={(checked) =>
                 toggleChecklistItem(item.id, checked === true)
               }
-              className="size-4 shrink-0"
+              className="mt-0.5 size-4 shrink-0"
               aria-label={`Mark ${item.label} as ${item.done ? "incomplete" : "complete"}`}
             />
-            <Input
+            <textarea
               value={item.label}
+              rows={1}
               onChange={(event) =>
                 updateChecklistLabel(item.id, event.target.value)
               }
               className={cn(
-                "h-auto flex-1 border-transparent px-0 py-0 text-sm shadow-none focus-visible:border-input focus-visible:px-2",
+                checklistItemInputClassName,
                 item.done && "text-muted-foreground line-through",
               )}
+              aria-label={`Checklist item: ${item.label}`}
             />
             <button
               type="button"
               onClick={() => removeChecklistItem(item.id)}
-              className="inline-flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
+              className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
               aria-label={`Remove ${item.label}`}
             >
               <MinusCircle className="size-4" />
