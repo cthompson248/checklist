@@ -1,16 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { MinusCircle, Plus } from "lucide-react";
-
 import { ClickToEditField } from "@/components/sprint-board/click-to-edit-field";
+import { IssueChecklist } from "@/components/sprint-board/issue-checklist";
 import { IssueLabelsField } from "@/components/sprint-board/issue-labels-field";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -55,57 +50,15 @@ export function IssueDetailSheet({
   availableLabels,
   onAvailableLabelsChange,
 }: IssueDetailSheetProps) {
-  const [newChecklistItem, setNewChecklistItem] = useState("");
-
   if (!issue) return null;
 
   const activeIssue = issue;
   const status = getStatusOption(activeIssue.status);
   const priority = getPriorityOption(activeIssue.priority);
   const assignee = getAssignee(activeIssue.assigneeId);
-  const completedCount = activeIssue.checklist.filter((item) => item.done).length;
-  const checklistProgress =
-    activeIssue.checklist.length === 0
-      ? 0
-      : Math.round((completedCount / activeIssue.checklist.length) * 100);
 
   function patchIssue(partial: Partial<Issue>) {
     onUpdate({ ...activeIssue, ...partial });
-  }
-
-  function toggleChecklistItem(id: string, done: boolean) {
-    patchIssue({
-      checklist: activeIssue.checklist.map((item) =>
-        item.id === id ? { ...item, done } : item,
-      ),
-    });
-  }
-
-  function updateChecklistLabel(id: string, label: string) {
-    patchIssue({
-      checklist: activeIssue.checklist.map((item) =>
-        item.id === id ? { ...item, label } : item,
-      ),
-    });
-  }
-
-  function removeChecklistItem(id: string) {
-    patchIssue({
-      checklist: activeIssue.checklist.filter((item) => item.id !== id),
-    });
-  }
-
-  function addChecklistItem() {
-    const label = newChecklistItem.trim();
-    if (!label) return;
-
-    patchIssue({
-      checklist: [
-        ...activeIssue.checklist,
-        { id: crypto.randomUUID(), label, done: false },
-      ],
-    });
-    setNewChecklistItem("");
   }
 
   return (
@@ -254,75 +207,11 @@ export function IssueDetailSheet({
 
           <Separator />
 
-          <div className="space-y-4 px-6 py-5">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-[11px] font-medium tracking-[0.12em] text-muted-foreground uppercase">
-                Checklist
-              </p>
-              <span className="text-xs text-muted-foreground">
-                {completedCount} / {activeIssue.checklist.length}
-              </span>
-            </div>
-
-            <Progress value={checklistProgress} className="h-1" />
-
-            <ul className="space-y-1">
-              {activeIssue.checklist.map((item) => (
-                <li
-                  key={item.id}
-                  className="group flex items-start gap-2 rounded-md px-1 py-1.5 hover:bg-muted/60"
-                >
-                  <Checkbox
-                    checked={item.done}
-                    onCheckedChange={(checked) =>
-                      toggleChecklistItem(item.id, checked === true)
-                    }
-                    className="mt-0.5"
-                    aria-label={`Mark ${item.label} as ${item.done ? "incomplete" : "complete"}`}
-                  />
-                  <Input
-                    value={item.label}
-                    onChange={(event) =>
-                      updateChecklistLabel(item.id, event.target.value)
-                    }
-                    className={cn(
-                      "h-auto flex-1 border-transparent px-1 py-0.5 text-sm shadow-none focus-visible:border-input",
-                      item.done && "text-muted-foreground line-through",
-                    )}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeChecklistItem(item.id)}
-                    className="mt-0.5 rounded-sm p-0.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
-                    aria-label={`Remove ${item.label}`}
-                  >
-                    <MinusCircle className="size-4" />
-                  </button>
-                </li>
-              ))}
-
-              <li className="flex items-start gap-2 rounded-md px-1 py-1.5">
-                <span
-                  aria-hidden
-                  className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center text-muted-foreground"
-                >
-                  <Plus className="size-4" />
-                </span>
-                <Input
-                  value={newChecklistItem}
-                  onChange={(event) => setNewChecklistItem(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      event.preventDefault();
-                      addChecklistItem();
-                    }
-                  }}
-                  placeholder="Add"
-                  className="h-auto flex-1 border-transparent px-1 py-0.5 text-sm shadow-none placeholder:text-muted-foreground/70 focus-visible:border-input"
-                  aria-label="New checklist item"
-                />
-              </li>
-            </ul>
+          <div className="px-6 py-5">
+            <IssueChecklist
+              items={activeIssue.checklist}
+              onItemsChange={(checklist) => patchIssue({ checklist })}
+            />
           </div>
         </div>
 

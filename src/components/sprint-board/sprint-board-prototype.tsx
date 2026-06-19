@@ -11,7 +11,7 @@ export function SprintBoardPrototype() {
   const [availableLabels, setAvailableLabels] = useState(() =>
     collectAvailableLabels(INITIAL_ISSUES),
   );
-  const [selectedIssueId, setSelectedIssueId] = useState<string | null>("128");
+  const [selectedIssueId, setSelectedIssueId] = useState<string | null>("139");
   const [sheetOpen, setSheetOpen] = useState(true);
 
   const selectedIssue =
